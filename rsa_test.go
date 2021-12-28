@@ -17,7 +17,7 @@ func TestMultiplicativeInverse(t *testing.T) {
 }
 
 func TestGenerateKeyPair(t *testing.T) {
-	// breaking change: 61 -> 60
+	// breaking change: 61 -> 60 take 2
 	p := 60
 	q := 53
 	e := 17
