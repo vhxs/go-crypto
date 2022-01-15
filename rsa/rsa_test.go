@@ -1,31 +1,31 @@
-package crypto
+package rsa
 
 import "testing"
 
 func TestGcd(t *testing.T) {
-	want := 3
+	want := int64(3)
 	if got := gcd(21, 15); got != want {
 		t.Errorf("gcd(%d, %d) = %d, want %d", 21, 15, got, want)
 	}
 }
 
 func TestMultiplicativeInverse(t *testing.T) {
-	want := 3
+	want := int64(3)
 	if got, err := multiplicative_inverse(3, 8); got != want || err != nil {
 		t.Errorf("inv %d mod %d is %d, want %d", 3, 8, got, want)
 	}
 }
 
 func TestGenerateKeyPair(t *testing.T) {
-	p := 61
-	q := 53
-	e := 17
+	p := int64(61)
+	q := int64(53)
+	e := int64(17)
 
-	expected_product := 3233
-	expected_exp_enc := 17
-	expected_exp_dec := 413
+	expected_product := int64(3233)
+	expected_exp_enc := int64(17)
+	expected_exp_dec := int64(413)
 
-	new_public_key, new_private_key, err := generate_key_pair(p, q, e)
+	new_public_key, new_private_key, err := Generate_key_pair(p, q, e)
 
 	if new_public_key.prime_product != expected_product {
 		t.Errorf("Expected product %d, got %d", expected_product, new_public_key.prime_product)
