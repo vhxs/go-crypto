@@ -1,6 +1,9 @@
 package rsa
 
-import "testing"
+import (
+	"math/rand"
+	"testing"
+)
 
 func TestGcd(t *testing.T) {
 	want := int64(3)
@@ -40,4 +43,35 @@ func TestGenerateKeyPair(t *testing.T) {
 	}
 }
 
-// adding comment here to push some change
+func TestEncryptDecrypt(t *testing.T) {
+	// Generate key pair
+	pub_key, prv_key, err := Generate_key_pair(7, 19, 5)
+	if err != nil {
+		t.Error(err.Error())
+	}
+
+	// try out random plaintexts, check whether dec(enc(text)) == text
+	for i := 0; i < 100; i++ {
+		rand_string := randStringBytes(20)
+		ciphertext := Encrypt(rand_string, pub_key)
+		decrypted, err := Decrypt(ciphertext, prv_key)
+
+		if err != nil {
+			t.Error(err.Error())
+		}
+
+		if rand_string != decrypted {
+			t.Errorf("Encrypt and Decrypt are not inverses on input string %s", rand_string)
+		}
+	}
+}
+
+func randStringBytes(n int) string {
+	const letterBytes = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+
+    b := make([]byte, n)
+    for i := range b {
+        b[i] = letterBytes[rand.Intn(len(letterBytes))]
+    }
+    return string(b)
+}

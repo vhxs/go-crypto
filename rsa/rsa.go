@@ -96,7 +96,7 @@ func intPowMod(a, b, n int64) int64 {
     }
     result := a
     for i := int64(2); i <= b; i++ {
-        result *= a
+		result *= a
 		result = result % n
     }
     return result
